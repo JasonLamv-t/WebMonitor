@@ -42,14 +42,17 @@ wmcli -u https://baidu.com -l
 ## Options
 
  ```
- -V, --version                  output the version number
- -D --debug                     Debug mode (default: false)
- -l --log                       Log mode (default: false)
- -u --url <Target URL>          Target URL
- -i --interval <Interval time>  The interval between initiating a web request(in seconds) (default: "60")
- -d --daemon                    Whether the web page will continue to run after the change (default: false)
- -m --method <Request method>   get | post (current get only) (default: "get")
- -r --retry <Retry limit>       Limit the number of retries (default: "5")
- -h, --help                     display help for command
+Usage: webmonitor -u, <Target URL> [options]
+
+Options:
+  -V, --version                   output the version number
+  -D, --debug                     Debug mode (default: false)
+  -l, --log                       Log mode (default: false)
+  -u, --url <Target URL>          Target URL
+  -i, --interval <Interval time>  The interval between initiating a web request(in seconds) (default: "60")
+  -d, --daemon                    Whether the web page will continue to run after the change (default: false)
+  -m, --method <Request method>   get | post (current get only) (default: "get")
+  -r, --retry <Retry limit>       Limit the number of retries (default: "5")
+  -h, --help                      display help for command
  ```
 
