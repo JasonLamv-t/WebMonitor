@@ -4,7 +4,8 @@
   "description": "a cli tool which monitor web page change and notificate",
   "main": "index.js",
   "bin": {
-    "webmonitor": "./bin/index.js"
+    "webmonitor": "./bin/index.js",
+    "webmo": "./bin/index.js"
   },
   "repository": "https://github.com/JasonLamv-t/WebMonitor.git",
   "author": "JasonLam v-t <jasonlamv-t@hotmail.com>",
@@ -13,6 +14,7 @@
     "axios": "^0.21.1",
     "chalk": "^4.1.1",
     "commander": "^7.2.0",
-    "inquirer": "^8.1.0"
+    "inquirer": "^8.1.0",
+    "validator.tool": "^1.0.10"
   }
 }
