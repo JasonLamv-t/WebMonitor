@@ -1,14 +1,14 @@
 {
-  "name": "webmonitor",
+  "name": "webmonitor-cli",
   "version": "1.0.0",
-  "description": "a cli tool which monitor web page change and notificate",
-  "main": "index.js",
+  "description": "A CLI tool that monitor web page change and notifies in real-time in local",
+  "main": "bin/index.js",
   "bin": {
     "webmonitor": "./bin/index.js",
-    "webmo": "./bin/index.js"
+    "wmcli": "./bin/index.js"
   },
   "repository": "https://github.com/JasonLamv-t/WebMonitor.git",
-  "author": "JasonLam v-t <jasonlamv-t@hotmail.com>",
+  "author": "jasonlam <jasonlamv-t@hotmail.com>",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.1",
