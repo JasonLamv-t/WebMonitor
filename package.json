@@ -1,13 +1,18 @@
 {
-  "name": "WebMonitor",
+  "name": "webmonitor",
   "version": "1.0.0",
   "description": "a cli tool which monitor web page change and notificate",
   "main": "index.js",
+  "bin": {
+    "webmonitor": "./bin/index.js"
+  },
   "repository": "https://github.com/JasonLamv-t/WebMonitor.git",
   "author": "JasonLam v-t <jasonlamv-t@hotmail.com>",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.1",
-    "commander": "^7.2.0"
+    "chalk": "^4.1.1",
+    "commander": "^7.2.0",
+    "inquirer": "^8.1.0"
   }
 }
