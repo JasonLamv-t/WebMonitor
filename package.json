@@ -7,8 +7,11 @@
     "webmonitor": "./bin/index.js",
     "wmcli": "./bin/index.js"
   },
-  "repository": "https://github.com/JasonLamv-t/WebMonitor.git",
-  "author": "jasonlam <jasonlamv-t@hotmail.com>",
+  "repository": {
+    "url": "https://github.com/JasonLamv-t/WebMonitor.git",
+    "type": "git"
+  },
+  "author": "JasonLamv-t <jasonlamv-t@hotmail.com>",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.1",

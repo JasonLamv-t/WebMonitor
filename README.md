@@ -1,4 +1,4 @@
-# WebMonitor
+# WebMonitor-CLI
 A CLI tool that monitor web page change and notifies in real-time in local
 
 ## Install
