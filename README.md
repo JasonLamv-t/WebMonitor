@@ -13,16 +13,28 @@ or
 yarn global add webmonitor-cli
 ```
 
-## Usage
+## Before use
 
 ```shell
-webmonitor -u https://baidu.com
+webmonitor config 
 ```
 
 or
 
 ```shell
-wmcli -u https://baidu.com
+wmcli config
+```
+
+## Usage
+
+```shell
+webmonitor run -u https://baidu.com
+```
+
+or
+
+```shell
+wmcli run -u https://baidu.com
 ```
 
 ## Examples
@@ -30,29 +42,36 @@ wmcli -u https://baidu.com
 Continuous monitoring of https://baidu.com with an interval of 5 seconds:
 
 ```shell
-wmcli -u https://baidu.com -d -i 5
+wmcli run -u https://baidu.com -d -i 5
 ```
 
 Log mode
 
 ```shell
-wmcli -u https://baidu.com -l
+wmcli run -u https://baidu.com -l
+```
+
+Notified by Wechat
+
+```shell
+wmcli run -u https://baidu.com -w
 ```
 
 ## Options
 
- ```
-Usage: webmonitor -u, <Target URL> [options]
+ ```she
+Usage: run -u <target url> [options]
 
 Options:
-  -V, --version                   output the version number
-  -D, --debug                     Debug mode (default: false)
-  -l, --log                       Log mode (default: false)
-  -u, --url <Target URL>          Target URL
-  -i, --interval <Interval time>  The interval between initiating a web request(in seconds) (default: "60")
-  -d, --daemon                    Whether the web page will continue to run after the change (default: false)
-  -m, --method <Request method>   get | post (current get only) (default: "get")
-  -r, --retry <Retry limit>       Limit the number of retries (default: "5")
-  -h, --help                      display help for command
+  -u --url <url>                 monitoring target
+  -l, --log                      log mode (default: false)
+  -i, --interval <delay>         the interval between initiating a web request in seconds (default: 60)
+  -D, --debug                    debug mode (default: false)
+  -d, --daemon                   monitor whether to continue after the change of the web page is detected (default: false)
+  -M, --mode <operation mode>    currently local only (choices: "local", default: "local")
+  -m, --method <request method>  current get only (choices: "get", default: "get")
+  -r, --retry <retry time>       retry times limit (default: 5)
+  -w --wechat                    enable Wechat push notification
+  -h, --help                     display help for command
  ```
 

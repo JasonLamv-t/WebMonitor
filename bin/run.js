@@ -10,6 +10,7 @@ const validator = require('../plugins/validator')
 const notify = require('../plugins/notify')
 
 program
+  .usage('-u <target url> [options]')
   .requiredOption('-u --url <url>', 'monitoring target', validator.isUrl)
   .option('-l, --log', 'log mode', false)
   .option('-i, --interval <delay>', 'the interval between initiating a web request in seconds', validator.isInt, 60)
