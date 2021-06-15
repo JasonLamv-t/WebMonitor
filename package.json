@@ -4,8 +4,8 @@
   "description": "A CLI tool that monitor web page change and notifies in real-time in local",
   "main": "bin/index.js",
   "bin": {
-    "webmonitor": "./bin/index.js",
-    "wmcli": "./bin/index.js"
+    "webmonitor": "./bin/app.js",
+    "wmcli": "./bin/app.js"
   },
   "repository": {
     "url": "https://github.com/JasonLamv-t/WebMonitor.git",

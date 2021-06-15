@@ -1,72 +1,35 @@
 #! /usr/bin/env node
 
-const { Command } = require('commander')
+const { Command, Option } = require('commander')
 const program = new Command()
 
-const chalk = require('chalk')
-const error = chalk.bgRedBright.white
-const warning = chalk.keyword('orange')
-const info = chalk.yellowBright
-
 const axios = require('axios')
-const inquirer = require('inquirer')
-const validator = require('../plugins/validator')
 const cheerio = require('cheerio')
+const { error, warning, info } = require('../plugins/theme')
+const validator = require('../plugins/validator')
+const notify = require('../plugins/notify')
 
 program
-  .name('webmonitor')
-  .version('1.0.0')
-  .usage('-u, <Target URL> [options]')
-  .option('-D, --debug', 'Debug mode', false)
-  .option('-l, --log', 'Log mode', false)
-  .requiredOption('-u, --url <Target URL>', 'Target URL')
-  .requiredOption('-i, --interval <Interval time>', 'The interval between initiating a web request(in seconds)', '60')
-  .requiredOption('-d, --daemon', 'Whether the web page will continue to run after the change', false)
-  // .option('-M, --mode <Operation mode>', 'Operation mode (currently local only)', 'local')
-  .option('-m, --method <Request method>', 'get | post (current get only)', 'get')
-  .option('-r, --retry <Retry limit>', 'Limit the number of retries', '5')
+  .requiredOption('-u --url <url>', 'monitoring target', validator.isUrl)
+  .option('-l, --log', 'log mode', false)
+  .option('-i, --interval <delay>', 'the interval between initiating a web request in seconds', validator.isInt, 60)
+  .option('-D, --debug', 'debug mode', false)
+  .option('-d, --daemon', 'monitor whether to continue after the change of the web page is detected', false)
+  .addOption(new Option('-M, --mode <operation mode>', 'currently local only').choices(['local']).default('local'))
+  .addOption(new Option('-m, --method <request method>', 'current get only').choices(['get']).default('get'))
+  .option('-r, --retry <retry time>', 'retry times limit', validator.isInt, 5)
+  .option('-w --wechat', 'enable Wechat push notification')
 
 program.parse(process.argv)
 
 const options = program.opts()
 if (options.debug) console.log('options: ', options)
 
-// validate params
-if (!validator.isUrl(options.url)) {
-  console.log(error('Error! Invalid parameter Target URL'))
-  return -1
-}
-
-try {
-  options.interval = parseInt(options.interval)
-  if (!options.interval) {
-    console.log(error('Error! Invalid parameter Interval time: Not Int'))
-    return -1
-  }
-} catch (e) {
-  console.log(error('Error! Invalid parameter Interval time: Not Int'))
-  return -1
-}
-
-try {
-  options.retry = parseInt(options.retry)
-  if (!options.retry) {
-    console.log(error('Error! Invalid parameter Retry limit: Not Int'))
-    return -1
-  }
-} catch (e) {
-  console.log(error('Error! Invalid parameter Retry limit: Not Int'))
-  return -1
-}
-
-// process params
-options.method = 'get'  // the current method can only be 'get'
-
-getRes = async () => {
+const getRes = async () => {
   return new Promise((resolve, reject) => {
     axios[options.method](options.url)
       .then(r => {
-        let $ = cheerio.load(r.data)
+        const $ = cheerio.load(r.data)
         if (options.debug) console.log($.text())
         resolve($.text())
       }).catch(e => {
@@ -95,18 +58,21 @@ getRes = async () => {
   })
 }
 
-main = async () => {
-  let requestCount = 0, retryCount = 0
-  let origin = await getRes().then(r => {
-    return r
-  }).catch(e => {
-    return false
-  })
+const main = async () => {
+  if (options.wechat) options.wechat = await notify.wechat()
+  if (!options.wechat) return -1
 
-  if (!origin) {
-    console.log('process exit')
-    return -1
-  }
+  let requestCount = 0, retryCount = 0
+  let origin = await getRes()
+    .then(r => { return r })
+    .catch(e => {
+      console.log(e)
+      return false
+    })
+
+  console.log(origin)
+
+  if (!origin) return { code: -1, message: 'Failed to request a web page for the first time.' }
   console.log('The request for the web page is successful. Start monitoring.')
 
   let pro = setInterval(async () => {
@@ -119,9 +85,11 @@ main = async () => {
       return false
     })
 
+    // The web page has not changed and is in log mode
     if (newWeb && newWeb == origin && options.log) console.log(`Request ${requestCount} times. The web page remains unchanged.`)
     else if (newWeb && newWeb != origin) {
       console.log(info('The web page has changed!'))
+      if (options.wechat) options.wechat()
       if (!options.daemon) {
         console.log('process exit')
         clearInterval(pro)
