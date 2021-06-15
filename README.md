@@ -1,5 +1,5 @@
 # WebMonitor-CLI
-A CLI tool that monitor web page change and notifies in real-time in local
+A CLI that monitors web page changes and pushes notifications through Wechat
 
 ## Install
 

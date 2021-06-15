@@ -1,7 +1,7 @@
 {
   "name": "webmonitor-cli",
-  "version": "1.0.0",
-  "description": "A CLI tool that monitor web page change and notifies in real-time in local",
+  "version": "1.1.1",
+  "description": "A CLI that monitors web page changes and pushes notifications through Wechat",
   "main": "bin/index.js",
   "bin": {
     "webmonitor": "./bin/app.js",

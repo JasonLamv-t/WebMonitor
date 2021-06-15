@@ -19,7 +19,7 @@ program
   .addOption(new Option('-M, --mode <operation mode>', 'currently local only').choices(['local']).default('local'))
   .addOption(new Option('-m, --method <request method>', 'current get only').choices(['get']).default('get'))
   .option('-r, --retry <retry time>', 'retry times limit', validator.isInt, 5)
-  .option('-w --wechat', 'enable Wechat push notification')
+  .option('-w, --wechat', 'enable Wechat push notification')
 
 program.parse(process.argv)
 
